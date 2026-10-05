@@ -1,4 +1,5 @@
 # 🌡️ TEMPERA — Smart Temperature Intelligence & Conversion Dashboard
+
 ### 🧠 Understand Temperature. Instantly.
 
 A premium, responsive, and intelligent temperature conversion experience built with **HTML5, CSS3, and Vanilla JavaScript**.
@@ -71,11 +72,11 @@ This makes the project useful as both a practical utility and a demonstration of
 
 Supports:
 
-| Unit | Symbol |
-|---|---|
-| Celsius | °C |
-| Fahrenheit | °F |
-| Kelvin | K |
+| Unit       | Symbol |
+| ---------- | ------ |
+| Celsius    | °C     |
+| Fahrenheit | °F     |
+| Kelvin     | K      |
 
 Any input updates the other units instantly using the JavaScript `input` event.
 
@@ -95,12 +96,12 @@ Supported conversions:
 The conversion engine is organized into reusable functions:
 
 ```javascript
-celsiusToFahrenheit()
-fahrenheitToCelsius()
-celsiusToKelvin()
-kelvinToCelsius()
-fahrenheitToKelvin()
-kelvinToFahrenheit()
+celsiusToFahrenheit();
+fahrenheitToCelsius();
+celsiusToKelvin();
+kelvinToCelsius();
+fahrenheitToKelvin();
+kelvinToFahrenheit();
 ```
 
 This keeps the calculation layer modular, readable, maintainable, and easy to test.
@@ -353,7 +354,7 @@ Show formula
 Speech responses can use:
 
 ```javascript
-SpeechSynthesisUtterance
+SpeechSynthesisUtterance;
 ```
 
 Unsupported browsers receive a graceful compatibility message.
@@ -390,7 +391,7 @@ tempera_theme
 The initial theme can respect:
 
 ```javascript
-prefers-color-scheme
+prefers - color - scheme;
 ```
 
 ---
@@ -661,17 +662,17 @@ Recommended:
 
 Optional features depend on browser support.
 
-| Feature | Requirement |
-|---|---|
-| Conversion | Modern JavaScript |
-| Theme | Modern CSS |
-| Geolocation | Browser permission |
-| Weather | Internet connection |
+| Feature           | Requirement                |
+| ----------------- | -------------------------- |
+| Conversion        | Modern JavaScript          |
+| Theme             | Modern CSS                 |
+| Geolocation       | Browser permission         |
+| Weather           | Internet connection        |
 | Voice recognition | Speech Recognition support |
-| Voice output | Speech Synthesis |
-| Clipboard | Clipboard API |
-| Scroll animation | IntersectionObserver |
-| Mouse follower | Pointer-capable device |
+| Voice output      | Speech Synthesis           |
+| Clipboard         | Clipboard API              |
+| Scroll animation  | IntersectionObserver       |
+| Mouse follower    | Pointer-capable device     |
 
 ---
 
@@ -832,16 +833,16 @@ a smart temperature conversion and intelligence dashboard.
 
 # 🧮 Conversion Test Cases
 
-| Input | Expected Result |
-|---|---|
-| 0°C | 32°F / 273.15K |
-| 100°C | 212°F / 373.15K |
-| -40°C | -40°F / 233.15K |
-| 25°C | 77°F / 298.15K |
-| 32°F | 0°C / 273.15K |
-| 212°F | 100°C / 373.15K |
-| 0K | -273.15°C / -459.67°F |
-| 273.15K | 0°C / 32°F |
+| Input   | Expected Result       |
+| ------- | --------------------- |
+| 0°C     | 32°F / 273.15K        |
+| 100°C   | 212°F / 373.15K       |
+| -40°C   | -40°F / 233.15K       |
+| 25°C    | 77°F / 298.15K        |
+| 32°F    | 0°C / 273.15K         |
+| 212°F   | 100°C / 373.15K       |
+| 0K      | -273.15°C / -459.67°F |
+| 273.15K | 0°C / 32°F            |
 
 ### Important test
 
@@ -859,27 +860,11 @@ Use CSS custom properties such as:
 
 ```css
 :root {
-  --bg-primary:
-  --bg-secondary:
-  --surface:
-  --surface-glass:
-  --text-primary:
-  --text-secondary:
-  --text-muted:
-  --border:
-  --temperature-primary:
-  --temperature-secondary:
-  --temperature-glow:
-  --accent-ai:
-  --shadow-sm:
-  --shadow-md:
-  --shadow-lg:
-  --radius-sm:
-  --radius-md:
-  --radius-lg:
-  --transition-fast:
-  --transition-normal:
-  --transition-slow:
+  --bg-primary: --bg-secondary: --surface: --surface-glass: --text-primary:
+    --text-secondary: --text-muted: --border: --temperature-primary:
+    --temperature-secondary: --temperature-glow: --accent-ai: --shadow-sm:
+    --shadow-md: --shadow-lg: --radius-sm: --radius-md: --radius-lg:
+    --transition-fast: --transition-normal: --transition-slow: ;
 }
 ```
 
@@ -892,12 +877,15 @@ This allows the visual atmosphere to change dynamically without duplicating colo
 Recommended typography:
 
 ### Headings
+
 **Space Grotesk** or **Sora**
 
 ### Body
+
 **Inter** or **Plus Jakarta Sans**
 
 ### Data
+
 **JetBrains Mono**
 
 The combination creates a technical, modern, premium dashboard aesthetic.
@@ -981,7 +969,7 @@ Check:
 Check:
 
 ```javascript
-navigator.clipboard
+navigator.clipboard;
 ```
 
 and browser permission/security requirements.
@@ -1191,8 +1179,12 @@ If you find TEMPERA useful or interesting:
 
 Built with ❤️ using **HTML5, CSS3 & Vanilla JavaScript**
 
-### 🧠 Smart enough to analyze.  
-### ⚡ Fast enough to calculate.  
+### 🧠 Smart enough to analyze.
+
+### ⚡ Fast enough to calculate.
+
 ### 🎨 Beautiful enough to remember.
+
 # temperature-converter
+
 # temperature-converter

@@ -1,0 +1,752 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TEMPERA — Smart Temperature Converter & Intelligence</title>
+
+    <!-- SEO & Social Metadata -->
+    <meta name="description"
+        content="Convert Celsius, Fahrenheit, and Kelvin instantly with TEMPERA, a smart temperature conversion and intelligence dashboard with dynamic thermal visualization." />
+    <meta name="keywords"
+        content="temperature converter, Celsius to Fahrenheit, Fahrenheit to Celsius, Kelvin converter, temperature calculator, temperature intelligence, TEMPERA" />
+    <meta name="author" content="Jatin Hemraj Joshi" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://tempera-intelligence.netlify.app/" />
+
+    <meta property="og:title" content="TEMPERA — Smart Temperature Intelligence & Conversion" />
+    <meta property="og:description"
+        content="Understand temperature instantly with live 3-way conversions, thermal mood adaptation, scientific stats, and voice recognition." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://tempera-intelligence.netlify.app/" />
+    <meta name="theme-color" content="#070A12" />
+
+    <!-- Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700;800&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <!-- Background Ambience & Mouse Follower -->
+    <div class="ambient-canvas" aria-hidden="true">
+        <div class="ambient-orb orb-cold"></div>
+        <div class="ambient-orb orb-dynamic" id="ambientDynamicOrb"></div>
+        <div class="ambient-orb orb-hot"></div>
+    </div>
+    <div class="mouse-follower" id="mouseFollower" aria-hidden="true"></div>
+
+    <!-- Toast Notification -->
+    <div class="toast-pill" id="globalToast" role="status" aria-live="polite">
+        Copied to clipboard ✓
+    </div>
+
+    <header class="app-header">
+        <div class="container nav-wrapper">
+            <a href="#hero" class="brand-link" aria-label="TEMPERA Home">
+                <div class="brand-symbol">🌡️</div>
+                <div class="brand-titles">
+                    <span class="brand-name">TEMPERA</span>
+                    <span class="brand-tag">TEMPERATURE INTELLIGENCE</span>
+                </div>
+            </a>
+
+            <nav aria-label="Primary Navigation">
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="#hero" class="nav-item-link">Home</a></li>
+                    <li><a href="#converter" class="nav-item-link">Converter</a></li>
+                    <li>
+                        <a href="#intelligence" class="nav-item-link">Intelligence</a>
+                    </li>
+                    <li><a href="#formulas" class="nav-item-link">Formulas</a></li>
+                    <li><a href="#weather" class="nav-item-link">Weather</a></li>
+                    <li><a href="#about" class="nav-item-link">About</a></li>
+                </ul>
+            </nav>
+
+            <div class="nav-actions">
+                <div class="ai-badge-status" title="Rule-based intelligence active">
+                    <span class="ai-pulse-dot"></span>
+                    <span>INTELLIGENCE ACTIVE</span>
+                </div>
+
+                <button type="button" class="icon-action-btn" id="themeToggleBtn"
+                    aria-label="Toggle Light and Dark Theme" title="Toggle Theme">
+                    <span id="themeIcon">☀️</span>
+                </button>
+
+                <button type="button" class="mobile-hamburger-btn" id="mobileMenuBtn" aria-label="Open Navigation Menu"
+                    aria-expanded="false" aria-controls="navMenu">
+                    <span class="bar bar-1"></span>
+                    <span class="bar bar-2"></span>
+                    <span class="bar bar-3"></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="section-spacing hero-section" id="hero">
+            <div class="container hero-grid">
+                <div class="hero-content">
+                    <div class="hero-eyebrow">
+                        <span>⚡ NEXT-GEN THERMAL ANALYSIS</span>
+                    </div>
+
+                    <h1 class="hero-title">
+                        Temperature, <br />
+                        <span class="gradient-word">Decoded.</span>
+                    </h1>
+
+                    <p class="hero-description">
+                        Convert seamlessly across Celsius, Fahrenheit, and Kelvin while
+                        unearthing contextual clothing suggestions, physiological comfort
+                        indexes, and dynamic environmental feedback.
+                    </p>
+
+                    <div class="hero-actions">
+                        <a href="#converter" class="btn btn-primary">
+                            <span>Start Converting</span>
+                            <span class="btn-icon-label">&rarr;</span>
+                        </a>
+                        <a href="#intelligence" class="btn btn-secondary">
+                            <span>Explore Intelligence</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Hero Dynamic Thermal Dial -->
+                <div class="glass-card hero-visual-card" id="heroVisualCard">
+                    <div class="thermal-dial-wrapper">
+                        <svg class="dial-svg" viewBox="0 0 280 280">
+                            <circle class="dial-track-circle" cx="140" cy="140" r="120"></circle>
+                            <circle class="dial-progress-circle" id="heroDialProgress" cx="140" cy="140" r="120">
+                            </circle>
+                        </svg>
+                        <div class="dial-center-content">
+                            <span class="dial-temp-value" id="heroDialTemp">24.0</span>
+                            <span class="dial-temp-unit">°C</span>
+                            <span class="dial-status-pill" id="heroDialPill">COMFORTABLE</span>
+                        </div>
+                    </div>
+
+                    <div class="dial-meta-chips">
+                        <span id="heroDialF">75.2°F</span>
+                        <span>•</span>
+                        <span id="heroDialK">297.15 K</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-spacing" id="converter">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-eyebrow">BIDIRECTIONAL CALCULATION</span>
+                    <h2 class="section-title">Convert Temperature</h2>
+                    <p class="section-lead">
+                        Type into any input field. TEMPERA synchronously recomputes every
+                        scale in real time.
+                    </p>
+                </div>
+
+                <div class="glass-card converter-card">
+                    <!-- Inline Physical Validation Alert -->
+                    <div class="validation-alert-box" id="validationAlert" role="alert">
+                        <span style="font-size: 1.3rem">⚠️</span>
+                        <span id="validationMsg">Temperature cannot be below Absolute Zero (0 K / -273.15°C /
+                            -459.67°F).</span>
+                    </div>
+
+                    <!-- 3 Converter Inputs -->
+                    <div class="converter-inputs-grid">
+                        <!-- Celsius Card -->
+                        <div class="input-unit-card" id="cardCelsius">
+                            <div class="input-card-header">
+                                <span class="unit-symbol-badge">°C</span>
+                                <div class="unit-title-group">
+                                    <span class="unit-name">Celsius</span>
+                                    <span class="unit-sub">Metric Standard</span>
+                                </div>
+                            </div>
+                            <input type="number" id="inputCelsius" class="temp-input-field" placeholder="24" step="any"
+                                aria-label="Temperature in Celsius" />
+                        </div>
+
+                        <!-- Fahrenheit Card -->
+                        <div class="input-unit-card" id="cardFahrenheit">
+                            <div class="input-card-header">
+                                <span class="unit-symbol-badge">°F</span>
+                                <div class="unit-title-group">
+                                    <span class="unit-name">Fahrenheit</span>
+                                    <span class="unit-sub">Imperial Scale</span>
+                                </div>
+                            </div>
+                            <input type="number" id="inputFahrenheit" class="temp-input-field" placeholder="75.2"
+                                step="any" aria-label="Temperature in Fahrenheit" />
+                        </div>
+
+                        <!-- Kelvin Card -->
+                        <div class="input-unit-card" id="cardKelvin">
+                            <div class="input-card-header">
+                                <span class="unit-symbol-badge">K</span>
+                                <div class="unit-title-group">
+                                    <span class="unit-name">Kelvin</span>
+                                    <span class="unit-sub">SI Thermodynamic</span>
+                                </div>
+                            </div>
+                            <input type="number" id="inputKelvin" class="temp-input-field" placeholder="297.15"
+                                step="any" min="0" aria-label="Temperature in Kelvin" />
+                        </div>
+                    </div>
+
+                    <!-- Quick Presets -->
+                    <div class="presets-container">
+                        <span class="preset-label">QUICK PRESETS:</span>
+                        <button type="button" class="preset-chip" data-celsius="-273.15">
+                            Absolute Zero (0 K)
+                        </button>
+                        <button type="button" class="preset-chip" data-celsius="-40">
+                            Equivalence (-40°C = -40°F)
+                        </button>
+                        <button type="button" class="preset-chip" data-celsius="0">
+                            Freezing (0°C)
+                        </button>
+                        <button type="button" class="preset-chip" data-celsius="22">
+                            Room Temp (22°C)
+                        </button>
+                        <button type="button" class="preset-chip" data-celsius="37">
+                            Human Body (37°C)
+                        </button>
+                        <button type="button" class="preset-chip" data-celsius="100">
+                            Boiling (100°C)
+                        </button>
+                    </div>
+
+                    <!-- Converter Controls -->
+                    <div class="converter-toolbar">
+                        <div class="toolbar-left">
+                            <button type="button" class="btn btn-secondary btn-sm" id="clearBtn">
+                                <span>✕ Clear Inputs</span>
+                            </button>
+                            <button type="button" class="btn btn-secondary btn-sm" id="swapUnitsBtn">
+                                <span>⇄ Swap C / F</span>
+                            </button>
+                        </div>
+
+                        <div class="toolbar-right">
+                            <button type="button" class="btn btn-secondary btn-sm" id="copyResultBtn">
+                                <span>📋 Copy Values</span>
+                            </button>
+                            <button type="button" class="btn btn-primary btn-sm" id="resetDefaultBtn">
+                                <span>↺ Reset to 24°C</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-spacing" id="intelligence">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-eyebrow">RULE-BASED COGNITION</span>
+                    <h2 class="section-title">Temperature Intelligence</h2>
+                    <p class="section-lead">
+                        Beyond mere numbers: actionable insights translated into human
+                        comfort and physiological safety.
+                    </p>
+                </div>
+
+                <div class="intelligence-grid">
+                    <!-- Category Overview Card -->
+                    <div class="glass-card insight-overview-card">
+                        <div>
+                            <div class="confidence-badge-row">
+                                <span class="preset-label">CLASSIFICATION</span>
+                                <span class="ai-badge-status" id="ruleConfidenceBadge">Confidence: 96%</span>
+                            </div>
+                            <h3 class="category-title" id="intelCategoryTitle">
+                                Comfortable
+                            </h3>
+                            <p class="category-summary-text" id="intelCategoryDesc">
+                                Ambient condition falls squarely within the biological sweet
+                                spot for optimal human cognition and relaxation.
+                            </p>
+                        </div>
+
+                        <div class="confidence-index-bar">
+                            <div class="conf-label-row">
+                                <span>Thermal Category Fit</span>
+                                <span id="intelFitPercent">96%</span>
+                            </div>
+                            <div class="conf-track">
+                                <div class="conf-fill" id="intelFitBar"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 4 Contextual Pillars Grid -->
+                    <div class="pillars-grid">
+                        <article class="pillar-card">
+                            <span class="pillar-icon" id="clothingIcon">👕</span>
+                            <span class="pillar-label">Apparel Recommendation</span>
+                            <h4 class="pillar-title" id="clothingTitle">
+                                Light Casual Layer
+                            </h4>
+                            <p class="pillar-desc" id="clothingDesc">
+                                Breathable cotton, short sleeves, or light knitwear
+                                recommended.
+                            </p>
+                        </article>
+
+                        <article class="pillar-card">
+                            <span class="pillar-icon" id="hydrationIcon">💧</span>
+                            <span class="pillar-label">Hydration Protocol</span>
+                            <h4 class="pillar-title" id="hydrationTitle">
+                                Standard Baseline
+                            </h4>
+                            <p class="pillar-desc" id="hydrationDesc">
+                                Regular hydration (~2 Liters/day); minimal excessive
+                                electrolyte loss.
+                            </p>
+                        </article>
+
+                        <article class="pillar-card">
+                            <span class="pillar-icon" id="comfortIcon">⚡</span>
+                            <span class="pillar-label">Physiological Comfort</span>
+                            <h4 class="pillar-title" id="comfortTitle">
+                                Optimal Equilibrium
+                            </h4>
+                            <p class="pillar-desc" id="comfortDesc">
+                                Zero thermal strain detected; minimal metabolic compensation
+                                required.
+                            </p>
+                        </article>
+
+                        <article class="pillar-card">
+                            <span class="pillar-icon" id="environmentIcon">🌍</span>
+                            <span class="pillar-label">Environmental Note</span>
+                            <h4 class="pillar-title" id="environmentTitle">
+                                Ideal Microclimate
+                            </h4>
+                            <p class="pillar-desc" id="environmentDesc">
+                                Safe for prolonged outdoor recreation and strenuous physical
+                                exercise.
+                            </p>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-spacing">
+            <div class="container">
+                <div class="glass-card visualizer-wrapper">
+                    <div class="spectrum-legend-row">
+                        <span>EXTREME COLD (&lt;0°C)</span>
+                        <span>COOL (10°C)</span>
+                        <span>COMFORTABLE (22°C)</span>
+                        <span>WARM (30°C)</span>
+                        <span>EXTREME HEAT (&gt;45°C)</span>
+                    </div>
+
+                    <div class="spectrum-bar-track">
+                        <div class="spectrum-marker-indicator" id="spectrumMarker" title="Current Marker"></div>
+                    </div>
+
+                    <div class="spectrum-ticks-row">
+                        <span>-50°C</span>
+                        <span>-25°C</span>
+                        <span>0°C</span>
+                        <span>+25°C</span>
+                        <span>+50°C</span>
+                        <span>+75°C</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Matrix Section -->
+        <section class="section-spacing">
+            <div class="container">
+                <div class="stats-matrix-grid">
+                    <div class="stat-box">
+                        <span class="stat-label">Rankine Scale (°R)</span>
+                        <div class="stat-num" id="statRankine">534.87</div>
+                        <span class="stat-sub">Imperial Absolute</span>
+                    </div>
+
+                    <div class="stat-box">
+                        <span class="stat-label">Distance from 0 K</span>
+                        <div class="stat-num" id="statDeltaK">297.15</div>
+                        <span class="stat-sub">Kelvin Elevation</span>
+                    </div>
+
+                    <div class="stat-box">
+                        <span class="stat-label">Speed of Sound in Air</span>
+                        <div class="stat-num" id="statSpeedSound">345.5 m/s</div>
+                        <span class="stat-sub">Approximate Velocity</span>
+                    </div>
+
+                    <div class="stat-box">
+                        <span class="stat-label">Water State (1 atm)</span>
+                        <div class="stat-num" id="statWaterState">Liquid</div>
+                        <span class="stat-sub">Standard Pressure</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-spacing" id="formulas">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-eyebrow">MATHEMATICAL FOUNDATIONS</span>
+                    <h2 class="section-title">The Formula Laboratory</h2>
+                    <p class="section-lead">
+                        Accurate mathematical formulas governing linear and absolute
+                        temperature conversions.
+                    </p>
+                </div>
+
+                <div class="formulas-grid">
+                    <article class="formula-card">
+                        <div>
+                            <span class="formula-badge">CELSIUS &rarr; FAHRENHEIT</span>
+                            <div class="formula-equation">°F = (°C × 9/5) + 32</div>
+                            <p class="formula-desc">
+                                Multiplies the metric degree by the 1.8 scaling factor and
+                                offsets by the freezing point of brine (32°F).
+                            </p>
+                        </div>
+                        <button type="button" class="btn btn-secondary btn-sm copy-formula-btn"
+                            data-formula="°F = (°C × 9/5) + 32">
+                            Copy Formula
+                        </button>
+                    </article>
+
+                    <article class="formula-card">
+                        <div>
+                            <span class="formula-badge">FAHRENHEIT &rarr; CELSIUS</span>
+                            <div class="formula-equation">°C = (°F − 32) × 5/9</div>
+                            <p class="formula-desc">
+                                Subtracts the 32° offset and scales back to the centigrade
+                                interval between melting ice and boiling steam.
+                            </p>
+                        </div>
+                        <button type="button" class="btn btn-secondary btn-sm copy-formula-btn"
+                            data-formula="°C = (°F − 32) × 5/9">
+                            Copy Formula
+                        </button>
+                    </article>
+
+                    <article class="formula-card">
+                        <div>
+                            <span class="formula-badge">CELSIUS &rarr; KELVIN</span>
+                            <div class="formula-equation">K = °C + 273.15</div>
+                            <p class="formula-desc">
+                                Shifts the centigrade origin directly down to absolute zero,
+                                where molecular kinetic motion ceases.
+                            </p>
+                        </div>
+                        <button type="button" class="btn btn-secondary btn-sm copy-formula-btn"
+                            data-formula="K = °C + 273.15">
+                            Copy Formula
+                        </button>
+                    </article>
+
+                    <article class="formula-card">
+                        <div>
+                            <span class="formula-badge">KELVIN &rarr; CELSIUS</span>
+                            <div class="formula-equation">°C = K − 273.15</div>
+                            <p class="formula-desc">
+                                Normalizes thermodynamic temperature back to standard
+                                atmospheric water freezing temperature.
+                            </p>
+                        </div>
+                        <button type="button" class="btn btn-secondary btn-sm copy-formula-btn"
+                            data-formula="°C = K − 273.15">
+                            Copy Formula
+                        </button>
+                    </article>
+
+                    <article class="formula-card">
+                        <div>
+                            <span class="formula-badge">FAHRENHEIT &rarr; KELVIN</span>
+                            <div class="formula-equation">K = (°F − 32) × 5/9 + 273.15</div>
+                            <p class="formula-desc">
+                                Combines imperial unit normalization with absolute
+                                thermodynamic origin translation.
+                            </p>
+                        </div>
+                        <button type="button" class="btn btn-secondary btn-sm copy-formula-btn"
+                            data-formula="K = (°F − 32) × 5/9 + 273.15">
+                            Copy Formula
+                        </button>
+                    </article>
+
+                    <article class="formula-card">
+                        <div>
+                            <span class="formula-badge">KELVIN &rarr; FAHRENHEIT</span>
+                            <div class="formula-equation">°F = (K − 273.15) × 9/5 + 32</div>
+                            <p class="formula-desc">
+                                Translates thermodynamic Kelvin into imperial degrees for
+                                meteorological and aviation engineering.
+                            </p>
+                        </div>
+                        <button type="button" class="btn btn-secondary btn-sm copy-formula-btn"
+                            data-formula="°F = (K − 273.15) × 9/5 + 32">
+                            Copy Formula
+                        </button>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tips Section -->
+        <section class="section-spacing">
+            <div class="container">
+                <div class="tips-grid">
+                    <article class="tip-card">
+                        <span class="tip-icon">🧊</span>
+                        <h3 class="tip-title">Absolute Zero (0 K)</h3>
+                        <p class="tip-text">
+                            The lowest conceivable temperature in the universe where
+                            thermodynamic entropy reaches its theoretical minimum.
+                        </p>
+                    </article>
+
+                    <article class="tip-card">
+                        <span class="tip-icon">🌌</span>
+                        <h3 class="tip-title">Cosmic Microwave Background</h3>
+                        <p class="tip-text">
+                            Deep space sits at approximately 2.73 K (-270.42°C), warmed only
+                            by residual thermal radiation from the Big Bang.
+                        </p>
+                    </article>
+
+                    <article class="tip-card">
+                        <span class="tip-icon">🌡️</span>
+                        <h3 class="tip-title">The -40° Equivalence</h3>
+                        <p class="tip-text">
+                            -40°C is the only identical numerical coordinate on both Celsius
+                            and Fahrenheit scales: -40°C = -40°F.
+                        </p>
+                    </article>
+
+                    <article class="tip-card">
+                        <span class="tip-icon">🔥</span>
+                        <h3 class="tip-title">Solar Core Heat</h3>
+                        <p class="tip-text">
+                            The center of our Sun sustains 15,000,000 K, where nuclear
+                            fusion continuously converts hydrogen into helium.
+                        </p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-spacing" id="weather">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-eyebrow">ENVIRONMENTAL CONTEXT</span>
+                    <h2 class="section-title">Live Weather Intelligence</h2>
+                    <p class="section-lead">
+                        Compare your manual calculations directly with your local
+                        atmospheric reality.
+                    </p>
+                </div>
+
+                <div class="glass-card weather-dashboard-card">
+                    <div class="weather-current-panel">
+                        <span class="weather-giant-icon" id="weatherIcon">🌤️</span>
+                        <div>
+                            <div class="weather-temp-digits" id="weatherLiveTemp">28°C</div>
+                            <div class="weather-condition-text" id="weatherCondition">
+                                Clear Sky
+                            </div>
+                            <span class="brand-tag" id="weatherCityName">Pune, Maharashtra, IN</span>
+                        </div>
+                    </div>
+
+                    <div class="weather-compare-panel">
+                        <div class="comparison-banner" id="weatherComparisonBanner">
+                            Your active converter temperature (24°C) is
+                            <strong>4°C cooler</strong> than your local weather (28°C).
+                        </div>
+
+                        <div style="display: flex; gap: 10px; align-items: center">
+                            <button type="button" class="btn btn-secondary btn-sm" id="detectLocationBtn">
+                                <span>📍 Sync My Location</span>
+                            </button>
+                            <button type="button" class="btn btn-secondary btn-sm" id="useWeatherAsInputBtn">
+                                <span>Use Local Weather as Input</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Assistant Section -->
+        <section class="section-spacing">
+            <div class="container">
+                <div class="glass-card ai-assistant-card">
+                    <div class="ai-avatar-column">
+                        <div class="ai-orb-avatar">🧠</div>
+                        <span class="ai-avatar-name">TemperAI</span>
+                        <span class="ai-avatar-sub">Rule-Based Assistant</span>
+                    </div>
+
+                    <div class="ai-dialogue-column">
+                        <div class="ai-bubble-box">
+                            <span id="aiMessageContainer">24°C falls into the comfortable range. Optimal for working,
+                                studying, and light physical activities.</span>
+                            <span class="typing-cursor"></span>
+                        </div>
+                        <div style="display: flex; gap: 8px">
+                            <button type="button" class="btn btn-secondary btn-sm" id="regenerateInsightBtn">
+                                <span>🔄 Regenerate Explanation</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-spacing">
+            <div class="container">
+                <div class="glass-card voice-control-card">
+                    <button type="button" class="voice-mic-main" id="voiceMicBtn" aria-label="Activate Voice Command">
+                        <span>🎙️</span>
+                    </button>
+
+                    <h3 style="font-family: var(--font-heading); margin-bottom: 6px">
+                        Voice-Activated Conversions
+                    </h3>
+                    <p class="voice-feedback-text" id="voiceFeedbackText">
+                        Click the microphone to speak (e.g., "Convert 25 Celsius" or
+                        "Switch to dark mode")
+                    </p>
+
+                    <div class="voice-commands-strip">
+                        <span class="voice-cmd-chip">"Convert 30 Celsius"</span>
+                        <span class="voice-cmd-chip">"What is 100 Fahrenheit?"</span>
+                        <span class="voice-cmd-chip">"Clear converter"</span>
+                        <span class="voice-cmd-chip">"Switch to dark mode"</span>
+                        <span class="voice-cmd-chip">"Reset"</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section class="section-spacing" id="about">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-eyebrow">ENGINEERING CONTEXT</span>
+                    <h2 class="section-title">About TEMPERA</h2>
+                    <p class="section-lead">
+                        A frontend demonstration bridging fundamental algorithms with
+                        high-craft UI/UX.
+                    </p>
+                </div>
+
+                <div class="about-project-grid">
+                    <div class="about-narrative">
+                        <p>
+                            TEMPERA was conceptualized and developed as part of the Web
+                            Development Internship curriculum at VEDA Technology by
+                            <strong>Jatin Hemraj Joshi</strong>. Rather than creating a bare
+                            calculator, this application demonstrates how a single core
+                            concept—thermal conversion—can be elevated into a multi-layered,
+                            accessible, and responsive product.
+                        </p>
+                        <p>
+                            Built strictly without frontend dependencies like React or
+                            utility frameworks like Tailwind CSS, TEMPERA uses native DOM
+                            APIs, custom CSS variable interpolation, Open-Meteo
+                            meteorological endpoints, and the Web Speech API to provide an
+                            authentic SaaS-grade experience.
+                        </p>
+                    </div>
+
+                    <div class="learning-objectives-card">
+                        <h4 style="font-family: var(--font-heading); font-size: 1.15rem">
+                            Core Competencies Demonstrated
+                        </h4>
+                        <ul class="objectives-list">
+                            <li>
+                                <span class="obj-check">✓</span> 3-Way Synchronous Form
+                                Handling & State
+                            </li>
+                            <li>
+                                <span class="obj-check">✓</span> Physical Boundary Validation
+                                (Absolute Zero)
+                            </li>
+                            <li>
+                                <span class="obj-check">✓</span> CSS Custom Property
+                                Architecture & Themes
+                            </li>
+                            <li>
+                                <span class="obj-check">✓</span> Geolocation & Third-Party
+                                REST API Integration
+                            </li>
+                            <li>
+                                <span class="obj-check">✓</span> Web Speech API (Speech
+                                Recognition & TTS)
+                            </li>
+                            <li>
+                                <span class="obj-check">✓</span> Responsive Layouts & WCAG 2.1
+                                AA Compliance
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="app-footer">
+        <div class="container">
+            <div class="footer-layout">
+                <div>
+                    <div class="brand-link">
+                        <span class="brand-symbol">🌡</span>
+                        <span class="brand-name">TEMPERA</span>
+                    </div>
+                    <p class="footer-brand-summary">
+                        Understand Temperature. Instantly.
+                    </p>
+                </div>
+
+                <ul class="footer-nav-links">
+                    <li><a href="#hero">Home</a></li>
+                    <li><a href="#converter">Converter</a></li>
+                    <li><a href="#intelligence">Intelligence</a></li>
+                    <li><a href="#formulas">Formulas</a></li>
+                    <li><a href="#weather">Weather</a></li>
+                    <li><a href="#about">About</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-bottom-strip">
+                <div>
+                    © 2026 TEMPERA // Developed by Jatin Hemraj Joshi. All rights
+                    reserved.
+                </div>
+                <div style="display: flex; gap: 20px">
+                    <span>HTML5 • CSS3 • ES6+ VANILLA JS</span>
+                    <a href="#hero" class="back-to-top-btn">&uarr; Back to Top</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="script.js"></script>
+</body>
+
+</html>
